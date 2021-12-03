@@ -25,8 +25,7 @@ class ViewController: UIViewController {
             label.textColor = .black
             label.textAlignment = .center
             label.translatesAutoresizingMaskIntoConstraints = false
-            
-                    
+                  
             return label
         }()
 
@@ -66,7 +65,6 @@ class ViewController: UIViewController {
                 pauseTimer()
             case false:
                 startTimer()
-                
                 
             }
         

@@ -81,6 +81,33 @@ class ViewController: UIViewController {
             }
         }
     
+    // MARK: - setup main logic -
+      
+      func workOrRest() { // эта функция отвечает за логику задания
+          
+          if timerDuration == 0 && isWorkMode { // отвечает за время работы
+              
+              timerDuration = 10
+              timerLabel.text = timeFormatted(timerDuration)
+              switchLabel.text = "time to work!"
+              isWorkMode = false
+              isStarted = false
+              timerButton.setTitle("Start", for: .normal)
+              
+          }
+          
+          if timerDuration == 0 && !isWorkMode { // отвечает за время отдыха
+              
+              timerDuration = 5
+              timerLabel.text = timeFormatted(timerDuration)
+              switchLabel.text = "relax time!"
+              timerButton.setTitle("Start", for: .normal)
+              isWorkMode = true
+              isStarted = false
+          }
+      }
+
+    
     // MARK: - setup buttons -
     
     func startTimer() {  // логика кнопки старт

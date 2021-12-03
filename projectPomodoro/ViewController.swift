@@ -9,6 +9,12 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private lazy var timer = Timer()
+    
+    private lazy var timerDuration = 10
+    
+    private lazy var isWorkMode = false // отвечает за смену РАБОТЫ и ОТДЫХА. Изначально false,тк действий никаких не производилось
+    private lazy var isStarted = false // отвечает за СТАРТ и ПАУЗУ. Изначально false,тк действий с кнопкой не производилось
     
     //MARK: - setup objects -
         
@@ -51,6 +57,51 @@ class ViewController: UIViewController {
         setupLayout()
     }
 
+    // MARK: - setup selector functions -
+        
+        @objc func timerButtonAction() { // логика кнопки
+            
+            switch isStarted {
+            case true:
+                pauseTimer()
+            case false:
+                startTimer()
+                
+                
+            }
+        
+        }
+        
+        @objc func timerAction() { // логика таймера
+                timerDuration -= 1
+            timerLabel.text = timeFormatted(timerDuration)
+            if timerDuration == 0 {
+                timer.invalidate()
+                workOrRest()
+            }
+        }
+    
+    // MARK: - setup buttons -
+    
+    func startTimer() {  // логика кнопки старт
+
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        isStarted = true
+        timerButton.setTitle("Pause", for: .normal)
+        
+    }
+    
+    func pauseTimer() { // логика кнопки пауза
+        timerButton.setTitle("Start", for: .normal)
+        timer.invalidate()
+        isStarted = false
+    }
+    
+    func timeFormatted(_ totalSeconds: Int) -> String { // формат времени таймера
+            let seconds: Int = totalSeconds % 60
+            let minutes: Int = (totalSeconds / 60) % 60
+            return String(format: "%02d:%02d", minutes, seconds)
+        }
     
     //MARK: - constraints -
     
